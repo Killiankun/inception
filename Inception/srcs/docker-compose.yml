@@ -2,13 +2,13 @@ version : "3.5"
 
 services : 
   nginx :
-    build : ./requirement/nginx
+    build : ./requirements/nginx
     container_name : nginx
     restart : always
     env_file :
       - .env
     ports:
-      - "443:443"
+      - 443:443
     depends_on :
       - wordpress
     volumes :
@@ -17,7 +17,7 @@ services :
       - inception-network
 
   wordpress :
-    build : ./requirement/wordpress
+    build : ./requirements/wordpress
     container_name : wordpress
     depends_on :
       - mariadb
@@ -25,20 +25,25 @@ services :
     env_file :
       - .env
     ports:
-      - "9000:9000"
+      - 9000:9000
     volumes :
       - wp:/var/www/html
     networks :
       - inception-network
 
   mariadb :
-    build : ./requirement/mariadb
+    build: 
+      context: ./requirements/mariadb
+      args:
+        NAME: ${DB_NAME}
+        USER: ${DB_USER}
+        PASSWORD: ${DB_PASSWORD}
     container_name : mariadb
     restart : always
     env_file :
       - .env
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes :
       - db:/var/lib/mysql
     networks :
@@ -47,14 +52,12 @@ services :
 volumes:
     wp:
       driver: local
-      name: wp
       driver_opts:
         type: none
         o: bind
         device: /home/kle-guen/data/wordpress
     db:
       driver: local
-      name: db
       driver_opts:
         type: none
         o: bind
@@ -62,5 +65,4 @@ volumes:
 
 networks : 
   inception-network :
-    name : inception-network
     driver : bridge
