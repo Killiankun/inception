@@ -11,4 +11,6 @@ RUN mkdir -p /var/run/mysqld
 RUN chown -R mysql:mysql /var/run/mysqld
 RUN chmod -R 777 var/run/mysqld 
 
+EXPOSE 3306
+
 ENTRYPOINT ["./mariadb.sh"]

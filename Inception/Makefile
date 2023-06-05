@@ -22,9 +22,4 @@ clean:
 fclean:
 	docker system prune -af
 
-re:
-	rm -rf /home/kle-guen/data/mariadb
-	rm -rf /home/kle-guen/data/wordpress
-	mkdir -p /home/kle-guen/data/mariadb
-	mkdir -p /home/kle-guen/data/wordpress
-	docker compose -f $(FILE) down && docker system prune -af && docker compose -f $(FILE) up -d
+re: stop clean fclean build start
