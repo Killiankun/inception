@@ -1,4 +1,22 @@
-version : "3.5"
+version : "3.8"
+
+volumes:
+    wp:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: /home/kle-guen/data/wordpress
+    db:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: /home/kle-guen/data/mariadb
+
+networks : 
+  inception-network :
+    driver : bridge
 
 services : 
   nginx :
@@ -49,20 +67,3 @@ services :
     networks :
       - inception-network
 
-volumes:
-    wp:
-      driver: local
-      driver_opts:
-        type: none
-        o: bind
-        device: /home/kle-guen/data/wordpress
-    db:
-      driver: local
-      driver_opts:
-        type: none
-        o: bind
-        device: /home/kle-guen/data/mariadb
-
-networks : 
-  inception-network :
-    driver : bridge
